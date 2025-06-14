@@ -5,10 +5,9 @@ import { TIngredient, TTabMode } from '@utils-types';
 import { BurgerIngredientsUI } from '../ui/burger-ingredients';
 import { useSelector } from 'react-redux';
 import { useDispatch } from '../../services/store';
-import { getIngredientsApiThunk } from '../../slices/ingredientSlice';
+import { getIngredients } from '../../slices/ingredientSlice';
 
 export const BurgerIngredients: FC = () => {
-  /** TODO: взять переменные из стора */
   const ingredientSelector = useSelector((state: any) => state.ingredients);
   const { data } = ingredientSelector;
   const dispatch = useDispatch();
@@ -16,7 +15,7 @@ export const BurgerIngredients: FC = () => {
   // костыль
   useEffect(() => {
     if (!ingredientSelector.data) {
-      dispatch(getIngredientsApiThunk());
+      dispatch(getIngredients());
     }
   }, []);
 

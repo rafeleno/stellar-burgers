@@ -1,19 +1,16 @@
 import { FC, useMemo } from 'react';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
-import { TIngredient } from '@utils-types';
+import { TIngredient, TOrder } from '@utils-types';
+import { useSelector } from '../../services/store';
+import { useParams } from 'react-router-dom';
 
 export const OrderInfo: FC = () => {
   /** TODO: взять переменные orderData и ingredients из стора */
-  const orderData = {
-    createdAt: '',
-    ingredients: [],
-    _id: '',
-    status: '',
-    name: '',
-    updatedAt: 'string',
-    number: 0
-  };
+  const orders = useSelector((state) => state.feed.orders);
+  const { id } = useParams<{ id: string }>();
+
+  const orderData = orders.find((order: TOrder) => order._id === id);
 
   const ingredients: TIngredient[] = [];
 
@@ -28,7 +25,7 @@ export const OrderInfo: FC = () => {
     };
 
     const ingredientsInfo = orderData.ingredients.reduce(
-      (acc: TIngredientsWithCount, item) => {
+      (acc: TIngredientsWithCount, item: string) => {
         if (!acc[item]) {
           const ingredient = ingredients.find((ing) => ing._id === item);
           if (ingredient) {
@@ -46,8 +43,14 @@ export const OrderInfo: FC = () => {
       {}
     );
 
-    const total = Object.values(ingredientsInfo).reduce(
-      (acc, item) => acc + item.price * item.count,
+    // const total = Object.values(ingredientsInfo).reduce(
+    //   (acc, item) => acc + item.price * item.count,
+    //   0
+    // );
+    // TODO: Не работает
+    const total = ingredientsInfo.reduce(
+      (acc: number, item: { price: number; count: number }) =>
+        acc + item.price * item.count,
       0
     );
 

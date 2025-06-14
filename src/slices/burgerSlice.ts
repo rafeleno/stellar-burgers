@@ -38,8 +38,16 @@ export const burgerSlice: Slice = createSlice({
               ingredient.id !== action.payload
           );
       }
+    },
+    clearBurger: (state) => {
+      state.constructorItems = {
+        bun: null,
+        ingredients: []
+      };
     }
   }
 });
 
+export const { addIngredient, removeIngredient, clearBurger } =
+  burgerSlice.actions;
 export default burgerSlice.reducer;

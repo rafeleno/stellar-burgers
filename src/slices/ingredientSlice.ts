@@ -3,18 +3,18 @@ import { getIngredientsApi } from '@api';
 import { TIngredient } from '@utils-types';
 
 type TInitialState = {
-  data: TIngredient[] | null;
+  data: TIngredient[];
   isLoading: boolean;
   error: null | 'Ошибка';
 };
 
 const initialState: TInitialState = {
-  data: null,
+  data: [],
   isLoading: false,
   error: null
 };
 
-export const getIngredientsApiThunk = createAsyncThunk(
+export const getIngredients = createAsyncThunk(
   'ingredients/getIngredients',
   async () => {
     const response = await getIngredientsApi();
@@ -28,22 +28,16 @@ export const ingredientSlice: Slice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getIngredientsApiThunk.fulfilled, (state, action) => {
+      .addCase(getIngredients.fulfilled, (state, action) => {
         state.data = action.payload;
         state.isLoading = false;
-
-        console.log('getIngredientsApiThunk.fulfilled');
       })
-      .addCase(getIngredientsApiThunk.rejected, (state) => {
+      .addCase(getIngredients.rejected, (state) => {
         state.error = 'Ошибка';
         state.isLoading = false;
-
-        console.log('getIngredientsApiThunk.rejected');
       })
-      .addCase(getIngredientsApiThunk.pending, (state) => {
+      .addCase(getIngredients.pending, (state) => {
         state.isLoading = true;
-
-        console.log('getIngredientsApiThunk.pending');
       });
   }
 });
