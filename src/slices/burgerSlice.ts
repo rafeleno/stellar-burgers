@@ -45,6 +45,38 @@ export const burgerSlice: Slice = createSlice({
         payload: { ...ingredient, id: crypto.randomUUID() }
       })
     },
+    moveUpIngredient: (state, { payload }: PayloadAction<string>) => {
+      const index = state.constructorItems.ingredients.findIndex(
+        (ingredient) => ingredient.id === payload
+      );
+      if (index > 0) {
+        const [movedIngredient] = state.constructorItems.ingredients.splice(
+          index,
+          1
+        );
+        state.constructorItems.ingredients.splice(
+          index - 1,
+          0,
+          movedIngredient
+        );
+      }
+    },
+    moveDownIngredient: (state, { payload }: PayloadAction<string>) => {
+      const index = state.constructorItems.ingredients.findIndex(
+        (ingredient) => ingredient.id === payload
+      );
+      if (index < state.constructorItems.ingredients.length - 1) {
+        const [movedIngredient] = state.constructorItems.ingredients.splice(
+          index,
+          1
+        );
+        state.constructorItems.ingredients.splice(
+          index + 1,
+          0,
+          movedIngredient
+        );
+      }
+    },
     removeIngredient: (state, { payload }: PayloadAction<string>) => {
       state.constructorItems.ingredients =
         state.constructorItems.ingredients.filter(
@@ -60,6 +92,11 @@ export const burgerSlice: Slice = createSlice({
   }
 });
 
-export const { addIngredient, removeIngredient, clearBurger } =
-  burgerSlice.actions;
+export const {
+  addIngredient,
+  removeIngredient,
+  clearBurger,
+  moveUpIngredient,
+  moveDownIngredient
+} = burgerSlice.actions;
 export default burgerSlice.reducer;
