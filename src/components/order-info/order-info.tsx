@@ -2,19 +2,18 @@ import { FC, useMemo } from 'react';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient, TOrder } from '@utils-types';
-import { useSelector } from '../../services/store';
 import { useParams } from 'react-router-dom';
+import { useSelector } from '../../services/store';
 
 export const OrderInfo: FC = () => {
-  /** TODO: взять переменные orderData и ingredients из стора */
+  const ingredients = useSelector((state) => state.ingredients.data);
   const orders = useSelector((state) => state.feed.orders);
-  const { id } = useParams<{ id: string }>();
 
-  const orderData = orders.find((order: TOrder) => order._id === id);
+  const { orderNumber } = useParams<{ orderNumber: string }>();
+  const orderData = orders?.find(
+    (order: TOrder) => order.number.toString() === orderNumber
+  );
 
-  const ingredients: TIngredient[] = [];
-
-  /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {
     if (!orderData || !ingredients.length) return null;
 
@@ -27,7 +26,13 @@ export const OrderInfo: FC = () => {
     const ingredientsInfo = orderData.ingredients.reduce(
       (acc: TIngredientsWithCount, item: string) => {
         if (!acc[item]) {
-          const ingredient = ingredients.find((ing) => ing._id === item);
+          const ingredient = ingredients.find((ing: TIngredient) => {
+            console.log('ингредиент:');
+            console.log(ing);
+
+            return ing._id === item;
+          });
+
           if (ingredient) {
             acc[item] = {
               ...ingredient,
@@ -43,14 +48,10 @@ export const OrderInfo: FC = () => {
       {}
     );
 
-    // const total = Object.values(ingredientsInfo).reduce(
-    //   (acc, item) => acc + item.price * item.count,
-    //   0
-    // );
-    // TODO: Не работает
-    const total = ingredientsInfo.reduce(
-      (acc: number, item: { price: number; count: number }) =>
-        acc + item.price * item.count,
+    console.log(ingredientsInfo);
+
+    const total = Object.values(ingredientsInfo).reduce(
+      (acc: any, item: any) => acc + item.price * item.count,
       0
     );
 

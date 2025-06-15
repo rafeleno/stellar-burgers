@@ -16,7 +16,7 @@ const initialState: TInitialState = {
   isLoading: false
 };
 
-const getOrdersApiThunk = createAsyncThunk<TOrder[]>(
+export const getOrdersApiThunk = createAsyncThunk<TOrder[]>(
   'orders/getOrders',
   async () => {
     const response = await getOrdersApi();

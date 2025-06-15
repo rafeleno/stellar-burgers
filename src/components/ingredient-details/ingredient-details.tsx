@@ -6,7 +6,6 @@ import { TIngredient } from '@utils-types';
 import { useSelector } from '../../services/store';
 
 export const IngredientDetails: FC = () => {
-  /** TODO: взять переменную из стора */
   const { id } = useParams<{ id: string }>();
   const ingredients = useSelector((state) => state.ingredients.data);
   const ingredientData = ingredients.find(

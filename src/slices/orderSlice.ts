@@ -53,6 +53,7 @@ export const orderSlice: Slice = createSlice({
   initialState,
   reducers: {
     clearOrder: (state) => {
+      state.orderRequest = false;
       state.orderModalData = null;
       state.newOrderData = null;
     }
