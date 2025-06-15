@@ -41,17 +41,6 @@ export const changeUserInfo = createAsyncThunk(
   }
 );
 
-// export const forgotUserPassword = createAsyncThunk(
-//   'user/forgotPassword',
-//   async (data: { email: string }) => {
-//     const response = await forgotPasswordApi(data);
-
-//     console.log(response);
-
-//     return response;
-//   }
-// );
-
 export const getUser = createAsyncThunk('user/get', async () => {
   const response = await getUserApi();
   return response;

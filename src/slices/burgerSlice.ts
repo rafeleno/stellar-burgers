@@ -1,12 +1,11 @@
 import { createSlice, PayloadAction, Slice } from '@reduxjs/toolkit';
-import { TConstructorIngredient, TIngredient } from '@utils-types';
+import { TConstructorIngredient, TIngredient, TOrder } from '@utils-types';
 import { randomUUID } from 'crypto';
+import { fetchOrder } from './orderSlice';
+import { TBurgerConstructorItems } from 'src/components/burger-constructor-element/type';
 
 type TInitialState = {
-  constructorItems: {
-    bun: TConstructorIngredient | null;
-    ingredients: TConstructorIngredient[];
-  };
+  constructorItems: TBurgerConstructorItems;
   error: string | null;
 };
 
@@ -24,12 +23,6 @@ export const burgerSlice: Slice = createSlice({
   name: 'burger',
   initialState,
   reducers: {
-    // addIngredient: (state, action: { payload: TConstructorIngredient }) => {
-    //   action.payload.type === 'bun'
-    //     ? (state.constructorItems.bun = action.payload)
-    //     : state.constructorItems.ingredients.push(action.payload);
-    // },
-
     addIngredient: {
       reducer: (
         state,
@@ -82,13 +75,15 @@ export const burgerSlice: Slice = createSlice({
         state.constructorItems.ingredients.filter(
           (ingredient: TConstructorIngredient) => ingredient.id !== payload
         );
-    },
-    clearBurger: (state) => {
+    }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchOrder.fulfilled, (state) => {
       state.constructorItems = {
         bun: null,
         ingredients: []
       };
-    }
+    });
   }
 });
 

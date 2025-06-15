@@ -51,7 +51,7 @@ export const OrderInfo: FC = () => {
     console.log(ingredientsInfo);
 
     const total = Object.values(ingredientsInfo).reduce(
-      (acc: any, item: any) => acc + item.price * item.count,
+      (acc: number, item: any) => acc + item.price * item.count,
       0
     );
 

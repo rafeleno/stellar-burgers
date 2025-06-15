@@ -5,3 +5,8 @@ export type BurgerConstructorElementProps = {
   index: number;
   totalItems: number;
 };
+
+export type TBurgerConstructorItems = {
+  bun: TConstructorIngredient | null;
+  ingredients: TConstructorIngredient[];
+};
