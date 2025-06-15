@@ -9,8 +9,6 @@ type TInitialState = {
   error: string | null;
 };
 
-//TODO: DONE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 const initialState: TInitialState = {
   error: null,
   constructorItems: {

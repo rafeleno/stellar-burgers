@@ -1,15 +1,12 @@
 import { orderBurgerApi } from '@api';
 import { createAsyncThunk, createSlice, Slice } from '@reduxjs/toolkit';
 import { TIngredient, TOrder } from '@utils-types';
-import { clear } from 'console';
 
 export const fetchOrder = createAsyncThunk<TOrder, TIngredient[]>(
   'order/fetchOrder',
   async (ingredients: TIngredient[]) => {
     try {
       if (!ingredients || ingredients.length === 0) {
-        console.log(100);
-
         return Promise.reject('Нет ингредиентов для заказа');
       }
       if (ingredients.filter((item) => item.type === 'bun').length !== 2) {
@@ -23,8 +20,6 @@ export const fetchOrder = createAsyncThunk<TOrder, TIngredient[]>(
     }
   }
 );
-
-//TODO: DONE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 type TInitialState = {
   orderRequest: boolean | 'loading';
@@ -64,18 +59,15 @@ export const orderSlice: Slice = createSlice({
         state.orderRequest = false;
         state.orderModalData = action.payload;
         state.isNewOrderLoading = false;
-        console.log('Order placed successfully:', action.payload);
       })
       .addCase(fetchOrder.rejected, (state) => {
         state.orderRequest = false;
         state.orderModalData = null;
         state.isNewOrderLoading = false;
-        console.log('Order placement failed');
       })
       .addCase(fetchOrder.pending, (state) => {
         state.orderRequest = true;
         state.isNewOrderLoading = true;
-        console.log('Order is being placed...');
       });
   }
 });

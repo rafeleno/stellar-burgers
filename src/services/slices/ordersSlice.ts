@@ -8,8 +8,6 @@ type TInitialState = {
   isLoading: boolean;
 };
 
-//TODO: DONE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 const initialState: TInitialState = {
   data: [],
   error: null,

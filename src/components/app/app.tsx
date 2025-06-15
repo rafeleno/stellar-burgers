@@ -17,9 +17,10 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { ProtectedRoute } from '../ProtectedRoute';
 import { useDispatch, useSelector } from '../../services/store';
 import { useEffect } from 'react';
-import { getUser } from '../../slices/userSlice';
-import { getFeed } from '../../slices/feedSlice';
-import { getIngredients } from '../../slices/ingredientSlice';
+import { getUser } from '../../services/slices/userSlice';
+import { getFeed } from '../../services/slices/feedSlice';
+import { getIngredients } from '../../services/slices/ingredientSlice';
+import { getOrdersApiThunk } from '../../services/slices/ordersSlice';
 
 function App() {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ function App() {
     dispatch(getUser());
     dispatch(getFeed());
     dispatch(getIngredients());
+    dispatch(getOrdersApiThunk());
   }, []);
 
   return (

@@ -11,7 +11,7 @@ import {
 } from '@api';
 import { createAsyncThunk, createSlice, Slice } from '@reduxjs/toolkit';
 import { TUser } from '@utils-types';
-import { setCookie } from '../utils/cookie';
+import { setCookie } from '../../utils/cookie';
 
 export const userRegister = createAsyncThunk<TAuthResponse, TRegisterData>(
   'user/register',

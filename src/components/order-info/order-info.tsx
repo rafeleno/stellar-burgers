@@ -26,12 +26,9 @@ export const OrderInfo: FC = () => {
     const ingredientsInfo = orderData.ingredients.reduce(
       (acc: TIngredientsWithCount, item: string) => {
         if (!acc[item]) {
-          const ingredient = ingredients.find((ing: TIngredient) => {
-            console.log('ингредиент:');
-            console.log(ing);
-
-            return ing._id === item;
-          });
+          const ingredient = ingredients.find(
+            (ing: TIngredient) => ing._id === item
+          );
 
           if (ingredient) {
             acc[item] = {
@@ -47,8 +44,6 @@ export const OrderInfo: FC = () => {
       },
       {}
     );
-
-    console.log(ingredientsInfo);
 
     const total = Object.values(ingredientsInfo).reduce(
       (acc: number, item: any) => acc + item.price * item.count,

@@ -1,7 +1,7 @@
 import { ProfileUI } from '@ui-pages';
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from '../../services/store';
-import { changeUserInfo } from '../../slices/userSlice';
+import { changeUserInfo } from '../../services/slices/userSlice';
 
 export const Profile: FC = () => {
   const user = useSelector((state) => state.user.data);
@@ -32,8 +32,6 @@ export const Profile: FC = () => {
     e.preventDefault();
     dispatch(changeUserInfo(formValue));
     formValue.password = '';
-    console.log(formValue);
-    console.log(user);
   };
 
   const handleCancel = (e: SyntheticEvent) => {
