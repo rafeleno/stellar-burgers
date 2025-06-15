@@ -1,5 +1,6 @@
-import { createSlice, Slice } from '@reduxjs/toolkit';
-import { TConstructorIngredient } from '@utils-types';
+import { createSlice, PayloadAction, Slice } from '@reduxjs/toolkit';
+import { TConstructorIngredient, TIngredient } from '@utils-types';
+import { randomUUID } from 'crypto';
 
 type TInitialState = {
   constructorItems: {
@@ -23,21 +24,34 @@ export const burgerSlice: Slice = createSlice({
   name: 'burger',
   initialState,
   reducers: {
-    addIngredient: (state, action: { payload: TConstructorIngredient }) => {
-      action.payload.type === 'bun'
-        ? (state.constructorItems.bun = action.payload)
-        : state.constructorItems.ingredients.push(action.payload);
+    // addIngredient: (state, action: { payload: TConstructorIngredient }) => {
+    //   action.payload.type === 'bun'
+    //     ? (state.constructorItems.bun = action.payload)
+    //     : state.constructorItems.ingredients.push(action.payload);
+    // },
+
+    addIngredient: {
+      reducer: (
+        state,
+        { payload }: PayloadAction<TConstructorIngredient & { id: string }>
+      ) => {
+        if (payload.type === 'bun') {
+          state.constructorItems.bun = payload;
+        } else {
+          state.constructorItems.ingredients.push(payload);
+        }
+      },
+      prepare: (ingredient: TIngredient) => ({
+        payload: { ...ingredient, id: crypto.randomUUID() }
+      })
     },
-    removeIngredient: (state, action: { payload: string }) => {
-      if (state.constructorItems.bun?.id === action.payload) {
-        state.constructorItems.bun = null;
-      } else {
-        state.constructorItems.ingredients =
-          state.constructorItems.ingredients.filter(
-            (ingredient: TConstructorIngredient) =>
-              ingredient.id !== action.payload
-          );
-      }
+    removeIngredient: (state, { payload }: PayloadAction<string>) => {
+      state.constructorItems.ingredients =
+        state.constructorItems.ingredients.filter(
+          (ingredient: TConstructorIngredient) => {
+            return ingredient.id !== payload;
+          }
+        );
     },
     clearBurger: (state) => {
       state.constructorItems = {

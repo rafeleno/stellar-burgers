@@ -66,7 +66,7 @@ function App() {
         <Route
           path={'/reset-password'}
           element={
-            <ProtectedRoute onlyForAuth>
+            <ProtectedRoute>
               <ResetPassword />
             </ProtectedRoute>
           }
