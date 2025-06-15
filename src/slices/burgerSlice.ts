@@ -48,9 +48,7 @@ export const burgerSlice: Slice = createSlice({
     removeIngredient: (state, { payload }: PayloadAction<string>) => {
       state.constructorItems.ingredients =
         state.constructorItems.ingredients.filter(
-          (ingredient: TConstructorIngredient) => {
-            return ingredient.id !== payload;
-          }
+          (ingredient: TConstructorIngredient) => ingredient.id !== payload
         );
     },
     clearBurger: (state) => {
