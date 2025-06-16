@@ -16,10 +16,7 @@ const initialState: TInitialState = {
 
 export const getOrdersApiThunk = createAsyncThunk<TOrder[]>(
   'orders/getOrders',
-  async () => {
-    const response = await getOrdersApi();
-    return response;
-  }
+  getOrdersApi
 );
 
 export const ordersSlice: Slice = createSlice({

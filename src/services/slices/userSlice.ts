@@ -29,9 +29,7 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-export const logoutUser = createAsyncThunk('user/logout', async () => {
-  await logoutApi();
-});
+export const logoutUser = createAsyncThunk('user/logout', logoutApi);
 
 export const changeUserInfo = createAsyncThunk(
   'user/changeInfo',
@@ -41,10 +39,7 @@ export const changeUserInfo = createAsyncThunk(
   }
 );
 
-export const getUser = createAsyncThunk('user/get', async () => {
-  const response = await getUserApi();
-  return response;
-});
+export const getUser = createAsyncThunk('user/get', getUserApi);
 
 type TInitialState = {
   data: TUser | null;
