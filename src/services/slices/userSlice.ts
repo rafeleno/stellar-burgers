@@ -43,10 +43,12 @@ export const getUser = createAsyncThunk('user/get', getUserApi);
 
 type TInitialState = {
   data: TUser | null;
+  isAuthChecked: boolean;
 };
 
 const initialState: TInitialState = {
-  data: null
+  data: null,
+  isAuthChecked: false
 };
 
 export const userSlice: Slice = createSlice({
@@ -66,9 +68,11 @@ export const userSlice: Slice = createSlice({
       })
       .addCase(getUser.fulfilled, (state, action) => {
         state.data = action.payload.user;
+        state.isAuthChecked = true;
       })
       .addCase(getUser.rejected, (state) => {
         state.data = null;
+        state.isAuthChecked = true;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.data = action.payload.user;

@@ -7,12 +7,22 @@ import { useSelector } from '../../services/store';
 
 export const OrderInfo: FC = () => {
   const ingredients = useSelector((state) => state.ingredients.data);
-  const orders = useSelector((state) => state.feed.orders);
+  const FeedOrders = useSelector((state) => state.feed.orders);
+  const userOrders = useSelector((state) => state.orders.data);
+
+  console.log('FeedOrders:', FeedOrders);
+  console.log('userOrders:', userOrders);
+
+  const orders = userOrders;
+
+  console.log('orders:', orders);
 
   const { orderNumber } = useParams<{ orderNumber: string }>();
   const orderData = orders?.find(
     (order: TOrder) => order.number.toString() === orderNumber
   );
+
+  console.log(orderData);
 
   const orderInfo = useMemo(() => {
     if (!orderData || !ingredients.length) return null;
