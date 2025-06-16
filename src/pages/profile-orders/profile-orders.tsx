@@ -6,7 +6,7 @@ import { getOrdersApiThunk } from '../../services/slices/ordersSlice';
 import { Preloader } from '@ui';
 
 export const ProfileOrders: FC = () => {
-  const userOrders: TOrder[] = useSelector((state) => state.orders.data);
+  const userOrders: TOrder[] = useSelector((state) => state.orders.orders);
   const isLoading = useSelector((state) => state.orders.isLoading);
   const [orders, setOrders] = useState<TOrder[]>([]);
   const dispatch = useDispatch();

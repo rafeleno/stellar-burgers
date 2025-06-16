@@ -7,20 +7,21 @@ import { useSelector } from '../../services/store';
 
 export const OrderInfo: FC = () => {
   const ingredients = useSelector((state) => state.ingredients.data);
-  const FeedOrders = useSelector((state) => state.feed.orders);
-  const userOrders = useSelector((state) => state.orders.data);
+  const feedOrders = useSelector((state) => state.feed.orders);
+  const userOrders = useSelector((state) => state.orders.orders);
 
-  console.log('FeedOrders:', FeedOrders);
-  console.log('userOrders:', userOrders);
-
-  const orders = userOrders;
-
-  console.log('orders:', orders);
+  // Добрый вечер, норм решение?
+  const orders: TOrder[] = [];
+  feedOrders ? orders.push(...feedOrders) : null;
+  userOrders ? orders.push(...userOrders) : null;
+  userOrders && feedOrders ? orders.push(...userOrders, ...feedOrders) : null;
 
   const { orderNumber } = useParams<{ orderNumber: string }>();
   const orderData = orders?.find(
     (order: TOrder) => order.number.toString() === orderNumber
   );
+
+  console.log(orderData);
 
   console.log(orderData);
 

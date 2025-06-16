@@ -3,13 +3,13 @@ import { createAsyncThunk, createSlice, Slice } from '@reduxjs/toolkit';
 import { TOrder } from '@utils-types';
 
 type TInitialState = {
-  data: TOrder[] | null;
+  orders: TOrder[] | null;
   error: string | null;
   isLoading: boolean;
 };
 
 const initialState: TInitialState = {
-  data: [],
+  orders: [],
   error: null,
   isLoading: false
 };
@@ -26,7 +26,7 @@ export const ordersSlice: Slice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getOrdersApiThunk.fulfilled, (state, action) => {
-        state.data = action.payload;
+        state.orders = action.payload;
         state.isLoading = false;
       })
       .addCase(getOrdersApiThunk.rejected, (state) => {
