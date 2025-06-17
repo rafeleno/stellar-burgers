@@ -1,32 +1,37 @@
-import { FC, useMemo } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient, TOrder } from '@utils-types';
 import { useParams } from 'react-router-dom';
-import { useSelector } from '../../services/store';
+import { useDispatch, useSelector } from '../../services/store';
+import { getOrdersApiThunk } from '../../services/slices/ordersSlice';
+import { getFeed } from '../../services/slices/feedSlice';
 
 export const OrderInfo: FC = () => {
-  const ingredients = useSelector((state) => state.ingredients.data);
-  const feedOrders = useSelector((state) => state.feed.orders);
-  const userOrders = useSelector((state) => state.orders.orders);
+  const dispatch = useDispatch();
+  const feedOrders = useSelector((state) => state.feed.orders) || [];
+  const userOrders = useSelector((state) => state.orders.orders) || [];
+  const ingredients = useSelector((state) => state.ingredients.data) || [];
 
-  // Добрый вечер, норм решение?
-  const orders: TOrder[] = [];
-  feedOrders ? orders.push(...feedOrders) : null;
-  userOrders ? orders.push(...userOrders) : null;
-  userOrders && feedOrders ? orders.push(...userOrders, ...feedOrders) : null;
+  useEffect(() => {
+    if (feedOrders.length === 0) dispatch(getFeed());
+    if (userOrders.length === 0) dispatch(getOrdersApiThunk());
+  }, [dispatch, feedOrders.length, userOrders.length]);
 
-  const { orderNumber } = useParams<{ orderNumber: string }>();
-  const orderData = orders?.find(
-    (order: TOrder) => order.number.toString() === orderNumber
+  const orders = useMemo(
+    () => [...feedOrders, ...userOrders],
+    [feedOrders, userOrders]
   );
 
-  console.log(orderData);
+  const { orderNumber } = useParams<{ orderNumber: string }>();
 
-  console.log(orderData);
+  const orderData = useMemo(
+    () => orders.find((order) => order.number.toString() === orderNumber),
+    [orders, orderNumber]
+  );
 
   const orderInfo = useMemo(() => {
-    if (!orderData || !ingredients.length) return null;
+    if (!orderData || ingredients.length === 0) return null;
 
     const date = new Date(orderData.createdAt);
 
@@ -61,17 +66,10 @@ export const OrderInfo: FC = () => {
       0
     );
 
-    return {
-      ...orderData,
-      ingredientsInfo,
-      date,
-      total
-    };
+    return { ...orderData, ingredientsInfo, total, date };
   }, [orderData, ingredients]);
 
-  if (!orderInfo) {
-    return <Preloader />;
-  }
+  if (!orderInfo) return <Preloader />;
 
   return <OrderInfoUI orderInfo={orderInfo} />;
 };
