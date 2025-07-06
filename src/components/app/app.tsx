@@ -25,9 +25,11 @@ function App() {
   const location = useLocation();
   const backgroundLocation = location.state?.background;
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user.data);
 
   useEffect(() => {
     dispatch(getUser());
+    console.log('user', user);
     dispatch(getIngredients());
   }, []);
 

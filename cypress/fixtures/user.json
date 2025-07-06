@@ -1,1 +1,4 @@
-[{ "email": "user@example.com", "name": "Иван Иванов" }]
+{
+  "success": true,
+  "user": { "email": "user@example.com", "name": "Иван Иванов" }
+}

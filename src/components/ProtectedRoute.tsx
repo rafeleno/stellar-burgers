@@ -21,7 +21,6 @@ export const ProtectedRoute = ({
   }
 
   if (onlyForAuth && isAuthChecked && !user) {
-    console.log('User is not authenticated, redirecting to login');
     return <Navigate to='/login' state={{ from: location }} replace />;
   }
 

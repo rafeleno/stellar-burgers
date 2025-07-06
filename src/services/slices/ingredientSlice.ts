@@ -1,5 +1,6 @@
-import { createAsyncThunk, createSlice, Slice } from '@reduxjs/toolkit';
 import { getIngredientsApi } from '@api';
+import { createAsyncThunk, createSlice, Slice } from '@reduxjs/toolkit';
+
 import { TIngredient } from '@utils-types';
 
 type TInitialState = {

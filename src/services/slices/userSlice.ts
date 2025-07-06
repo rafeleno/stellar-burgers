@@ -1,5 +1,4 @@
 import {
-  forgotPasswordApi,
   getUserApi,
   loginUserApi,
   logoutApi,
@@ -69,10 +68,15 @@ export const userSlice: Slice = createSlice({
       .addCase(getUser.fulfilled, (state, action) => {
         state.data = action.payload.user;
         state.isAuthChecked = true;
+
+        console.log(666);
+        console.log('action.payload', action.payload);
+        console.log('state.data', state.data);
       })
       .addCase(getUser.rejected, (state) => {
         state.data = null;
         state.isAuthChecked = true;
+        console.log(100);
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.data = action.payload.user;
