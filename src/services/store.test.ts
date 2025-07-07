@@ -1,4 +1,4 @@
-import { rootReducer } from '../store';
+import { rootReducer } from './store';
 
 describe('rootReducer', () => {
   it('должен вернуть корректное начальное состояние', () => {
