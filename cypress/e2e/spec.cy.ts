@@ -1,6 +1,6 @@
 describe('Тесты конструктора', () => {
-  beforeEach(() => {
-    // TODO: Мокнаем ингредиенты, пользователя, заказ
+  before(() => {
+    // Мокнаем ингредиенты, пользователя, заказ
     cy.fixture('ingredients').then((ingredients) => {
       cy.intercept('GET', '**/ingredients', {
         statusCode: 200,
@@ -31,6 +31,12 @@ describe('Тесты конструктора', () => {
     cy.visit('/');
     cy.wait('@getIngredients');
     cy.wait('@getUser');
+  });
+
+  after(() => {
+    // Токены
+    window.localStorage.removeItem('accessToken');
+    cy.setCookie('refreshToken', '');
   });
 
   it('собираем бургер', () => {
