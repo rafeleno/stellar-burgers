@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice, Slice } from '@reduxjs/toolkit';
 
 import { TIngredient } from '@utils-types';
 
-type TInitialState = {
+export type TInitialState = {
   data: TIngredient[];
   isLoading: boolean;
   error: null | 'Ошибка';
@@ -39,3 +39,5 @@ export const ingredientSlice: Slice = createSlice({
       });
   }
 });
+
+export default ingredientSlice.reducer;

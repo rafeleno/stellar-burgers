@@ -4,7 +4,7 @@ import { randomUUID } from 'crypto';
 import { fetchOrder } from './orderSlice';
 import { TBurgerConstructorItems } from 'src/components/burger-constructor-element/type';
 
-type TInitialState = {
+export type TInitialState = {
   constructorItems: TBurgerConstructorItems;
   error: string | null;
 };
