@@ -40,20 +40,37 @@ describe('Тесты конструктора', () => {
   });
 
   it('собираем бургер', () => {
+    // Проверяем что булки нет
+    cy.get('[data-cy-type="ingredients-container"]')
+      .find('div')
+      .eq(0)
+      .find('span')
+      .should('not.exist');
+
+    // Добавляем булку
     cy.get('[data-cy-type="bun"]').find('button').contains('Добавить').click();
 
+    // Проверяем что булка есть
     cy.get('[data-cy-type="ingredients-container"]')
       .find('div')
       .eq(0)
       .find('span')
       .should('exist');
 
+    // Проверяем что ингредиента нет
+    cy.get('[data-cy-type="ingredients-container"]')
+      .find('ul')
+      .find('li')
+      .should('not.exist');
+
+    // Добавляем ингредиент
     cy.get('[data-cy-type="main"]')
       .first()
       .find('button')
       .contains('Добавить')
       .click();
 
+    // Проверяем что ингредиент есть
     cy.get('[data-cy-type="ingredients-container"]')
       .find('ul')
       .find('li')
@@ -61,12 +78,21 @@ describe('Тесты конструктора', () => {
       .find('span')
       .should('exist');
 
+    // Проверяем что соуса нет
+    cy.get('[data-cy-type="ingredients-container"]')
+      .find('ul')
+      .find('li')
+      .eq(1)
+      .should('not.exist');
+
+    // Добавляем суос
     cy.get('[data-cy-type="sauce"]')
       .first()
       .find('button')
       .contains('Добавить')
       .click();
 
+    // Проверяем что соус есть
     cy.get('[data-cy-type="ingredients-container"]')
       .find('ul')
       .find('li')
@@ -76,7 +102,7 @@ describe('Тесты конструктора', () => {
 
     // Проверка модалки
     cy.get('[data-cy-type="bun"]').first().find('a').click();
-    cy.get('[data-cy-type="modal"]').should('exist');
+    cy.get('[data-cy-type="modal"]').contains('h3', 'Ингредиент 1');
     cy.get('[data-cy-type="modal"]')
       .find('h3')
       .contains('Описание ингредиента');
@@ -90,12 +116,38 @@ describe('Тесты конструктора', () => {
     cy.get('body').click(0, 0);
     cy.get('[data-cy-type="modal"]').should('not.exist');
 
-    //Заказ
+    //   //Заказ
+    //   cy.get('[data-cy-test-id="order-button"]').click();
+
+    //   // Проверка пустого конструктора
+    //   cy.get('[data-cy-type="ingredients-container"]')
+    //     .find('div')
+    //     .eq(0)
+    //     .find('span')
+    //     .should('not.exist');
+    //   cy.get('[data-cy-type="ingredients-container"]')
+    //     .find('div')
+    //     .eq(1)
+    //     .find('span')
+    //     .should('not.exist');
+    //   cy.get('[data-cy-type="ingredients-container"]')
+    //     .find('div')
+    //     .eq(2)
+    //     .find('span')
+    //     .should('not.exist');
+
+    //   cy.wait('@getOrder');
+
+    //   cy.get('[data-cy-test-id="order-number"]').should('contain', '666');
+    //   cy.get('body').click(0, 0);
+    //   cy.get('[data-cy-type="modal"]').should('not.exist');
+    // });
+
+    // Нажать кнопку
     cy.get('[data-cy-test-id="order-button"]').click();
+
+    // Дождаться моканного ответа
     cy.wait('@getOrder');
-    cy.get('[data-cy-test-id="order-number"]').should('contain', '666');
-    cy.get('body').click(0, 0);
-    cy.get('[data-cy-type="modal"]').should('not.exist');
 
     // Проверка пустого конструктора
     cy.get('[data-cy-type="ingredients-container"]')
@@ -113,5 +165,12 @@ describe('Тесты конструктора', () => {
       .eq(2)
       .find('span')
       .should('not.exist');
+
+    // Проверить номер заказа
+    cy.get('[data-cy-test-id="order-number"]').should('contain', '666');
+
+    // Закрыть модалку
+    cy.get('body').click(0, 0);
+    cy.get('[data-cy-type="modal"]').should('not.exist');
   });
 });
