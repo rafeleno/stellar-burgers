@@ -2,7 +2,7 @@ import { getOrdersApi } from '@api';
 import { createAsyncThunk, createSlice, Slice } from '@reduxjs/toolkit';
 import { TOrder } from '@utils-types';
 
-type TInitialState = {
+export type TInitialState = {
   orders: TOrder[] | null;
   error: string | null;
   isLoading: boolean;

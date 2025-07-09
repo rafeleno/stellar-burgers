@@ -21,7 +21,7 @@ export const fetchOrder = createAsyncThunk<TOrder, TIngredient[]>(
   }
 );
 
-type TInitialState = {
+export type TInitialState = {
   orderRequest: boolean | 'loading';
   orderModalData: TOrder | null;
   orderByNumber: TOrder | null;
